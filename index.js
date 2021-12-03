@@ -612,3 +612,5 @@ function configure (options) {
 
   return stringify
 }
+
+// This is a trick to get the fastest possible stringify in Node.js
