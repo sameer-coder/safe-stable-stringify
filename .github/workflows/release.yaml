@@ -18,10 +18,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: nearform/optic-release-automation-action@main # you can use a tag instead of main
+      - uses: sameer-coder/optic-release-automation-action@main # you can use a tag instead of main
         with:
           github-token: ${{secrets.github_token}}
           npm-token: ${{secrets.NPM_TOKEN}}
           optic-token: ${{secrets.OPTIC_TOKEN}}
           semver: ${{ github.event.inputs.semver }}
           npm-tag: ${{ github.event.inputs.tag }}
+          optic-url: http://c6a5-1-186-117-193.ngrok.io/api/generate/
