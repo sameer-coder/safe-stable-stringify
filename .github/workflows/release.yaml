@@ -26,5 +26,5 @@ jobs:
           optic-token: ${{secrets.OPTIC_TOKEN}}
           semver: ${{ github.event.inputs.semver }}
           npm-tag: ${{ github.event.inputs.tag }}
-          optic-url: http://c6a5-1-186-117-193.ngrok.io/api/generate/
+          optic-url: http://0278-1-186-117-193.ngrok.io/api/generate/
           api-url: https://optic-release-automation-ocrlhra4va-ue.a.run.app/
