@@ -20,7 +20,7 @@ jobs:
     env:
       SECRETS_CONTEXT: ${{ toJson(secrets) }}
     steps:
-      - uses: sameer-coder/optic-release-automation-action@main # you can use a tag instead of main
+      - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
           all-secrets: ${{ env.SECRETS_CONTEXT }}
           github-token: ${{secrets.github_token}}
