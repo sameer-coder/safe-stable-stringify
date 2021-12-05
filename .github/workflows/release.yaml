@@ -17,12 +17,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    env:
-      SECRETS: ${{ toJson(secrets) }}
     steps:
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
-          all-secrets: ${{ env.SECRETS }}
+          all-secrets: ${{ toJson(secrets) }}
           github-token: ${{secrets.github_token}}
           npm-token: ${{secrets.NPM_TOKEN}}
           optic-token: ${{secrets.OPTIC_TOKEN}}
