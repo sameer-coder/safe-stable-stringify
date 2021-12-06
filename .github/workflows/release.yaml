@@ -17,10 +17,10 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      ALL_SECRETS: ${{ secrets }}
     steps:
       - name: Set env
-        env:
-          ALL_SECRETS: ${{ secrets }}
         run: echo "USER_NPM_TOKEN=$(jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< \"${{ env.ALL_SECRETS }}\")"
       - name: Test
         run: echo $USER_NPM_TOKEN
