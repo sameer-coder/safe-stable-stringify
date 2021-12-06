@@ -19,6 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set env
-        run: echo "USER_NPM_TOKEN=$(jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< \"${{secrets}}\")"
+        run: echo "USER_NPM_TOKEN=$(jq -r 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <<< \"${{ toJson(secrets)}}\")"
       - name: Test
         run: echo $USER_NPM_TOKEN
