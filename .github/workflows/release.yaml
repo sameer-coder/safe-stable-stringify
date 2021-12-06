@@ -18,9 +18,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - name: Any Name Bash Test Step
+    - name: Get tokens
       run: |
-        TEST_VAR="hellllo"
         USER_NPM_TOKEN=$(jq --arg v "{{secrets}}" '$v | to_entries[] | select((.key | startswith("npm_token_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]')
         echo "$USER_NPM_TOKEN"
-        echo "$TEST_VAR"
