@@ -20,5 +20,5 @@ jobs:
     steps:
     - name: Get tokens
       run: |
-        USER_NPM_TOKEN=$(echo  ${{ toJson(secrets) }} | jq '. | to_entries[] | select((.key | startswith("npm_token_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]')
+        USER_NPM_TOKEN=$(jq '. | to_entries[] | select((.key | startswith("npm_token_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]' <<< echo  ${{ toJson(secrets) }})
         echo "$USER_NPM_TOKEN"
