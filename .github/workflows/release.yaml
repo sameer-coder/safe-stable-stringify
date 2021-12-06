@@ -20,4 +20,4 @@ jobs:
     steps:
       - run: |
           echo "GITHUB_SHA_SHORT=$(echo 'hello')" >> $GITHUB_ENV
-          echo $GITHUB_SHA_SHORT
+          echo "$GITHUB_SHA_SHORT"
