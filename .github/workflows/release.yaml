@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          USER_NPM_TOKEN=$(jq '{{ toJson(secrets) }} | to_entries[] | select((.key | startswith("npm_token_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]')
+          USER_NPM_TOKEN=$(jq --arg v "{{secrets}}" '$v | to_entries[] | select((.key | startswith("npm_token_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]')
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
           user-npm-token: $USER_NPM_TOKEN
