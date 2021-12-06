@@ -19,6 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set env
-        run: echo "USER_NPM_TOKEN=$(echo \"${{ toJson(secrets) }}\" | jq --raw-output '.')" >> $GITHUB_ENV
+        run: echo "USER_NPM_TOKEN=$(echo \"${{ toJson(secrets) }}\" | jq 'select((.key | startswith("npm_token_"))')" >> $GITHUB_ENV
       - name: Test
         run: echo $USER_NPM_TOKEN
