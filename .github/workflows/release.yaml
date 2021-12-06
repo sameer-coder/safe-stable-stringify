@@ -19,7 +19,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set env
-        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
+        run: echo "USER_NPM_TOKEN=$(jq '. | tojson | to_entries[] | select((.key | startswith("npm_token_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]' <(echo "${{ toJson(secrets) }}") )" >> $GITHUB_ENV
       - name: Test
-        run: echo $GITHUB_SHA_SHORT
-        
+        run: echo $USER_NPM_TOKEN
