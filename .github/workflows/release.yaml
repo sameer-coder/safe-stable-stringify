@@ -20,6 +20,8 @@ jobs:
     steps:
       - name: Set env
         shell: bash
-        run: echo "USER_NPM_TOKEN=$(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' <(echo \"${{ toJson(secrets) }}\") )"
+        run: |
+          echo "${{ toJson(secrets) }}" > secrets.json
+          echo "USER_NPM_TOKEN=$(jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]' secrets.json)"
       - name: Test
         run: echo $USER_NPM_TOKEN
