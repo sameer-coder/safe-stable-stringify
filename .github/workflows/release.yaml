@@ -19,7 +19,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          USER_NPM_TOKEN=$(jq '.' <(echo "${{ fromJson(secrets) }}") )
           USER1=$(echo "${{ fromJson(secrets) }}")
-          echo "$USER_NPM_TOKEN"
           echo "$USER1"
