@@ -28,14 +28,10 @@ jobs:
         run: |
           NPM_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
           OPTIC_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
-          echo $NPM_TOKEN
-          echo $OPTIC_TOKEN
 
           echo ::add-mask::$NPM_TOKEN
           echo ::add-mask::$OPTIC_TOKEN
 
-          echo ::set-output name=USER_NPM_TOKEN::$NPM_TOKEN
-          echo ::set-output name=USER_OPTIC_TOKEN::$OPTIC_TOKEN
 
           echo USER_NPM_TOKEN=$(echo $NPM_TOKEN) >> $GITHUB_ENV
           echo USER_OPTIC_TOKEN=$(echo $OPTIC_TOKEN) >> $GITHUB_ENV
