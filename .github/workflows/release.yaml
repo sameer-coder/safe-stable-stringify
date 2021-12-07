@@ -22,6 +22,6 @@ jobs:
         shell: bash
         run: |
           echo "${{ toJson(secrets) }}" > secrets.json
-          echo "USER_NPM_TOKEN=$(cat secrets.json | jq 'to_entries|map("\(.key)=\(.value|tostring)")|.[]')"
+          echo "USER_NPM_TOKEN=$(cat secrets.json)"
       - name: Test
         run: echo $USER_NPM_TOKEN
