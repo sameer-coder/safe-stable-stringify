@@ -26,9 +26,6 @@ jobs:
           echo ::set-output name=tokens::$(cat secrets.json)
       - name: Test
         run: |
-          # USER_NPM_TOKEN=$(echo '${{ steps.getversion.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
-          # echo $USER_NPM_TOKEN
-          # echo '${{ steps.getversion.outputs.tokens }}'
           USER_OPTIC_TOKEN=$(echo '${{ steps.getversion.outputs.token }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
           echo $USER_OPTIC_TOKEN
         continue-on-error: true
