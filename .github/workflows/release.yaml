@@ -36,8 +36,8 @@ jobs:
           # echo "::add-mask::${{ env.USER_OPTIC_TOKEN }}"
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
-          user-npm-token: ${{ USER_NPM_TOKEN }}
-          user-optic-token: ${{ USER_OPTIC_TOKEN }}
+          user-npm-token: $USER_NPM_TOKEN
+          user-optic-token: $USER_OPTIC_TOKEN
           github-token: ${{secrets.github_token}}
           npm-token: ${{secrets.NPM_TOKEN}}
           optic-token: ${{secrets.OPTIC_TOKEN}}
