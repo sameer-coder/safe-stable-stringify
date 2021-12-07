@@ -23,6 +23,6 @@ jobs:
         run: |
           echo "${{ toJson(secrets) }}" > secrets.json
           cat << EOF {"key1": "value1", "key2": "value2", "key3": "value3"} EOF | jq
-          USER_NPM_TOKEN=$(jq '.' secrets.json)
+          USER_NPM_TOKEN=$(jq -R '.' secrets.json)
       - name: Test
         run: echo $USER_NPM_TOKEN
