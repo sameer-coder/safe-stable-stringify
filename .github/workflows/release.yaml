@@ -27,4 +27,4 @@ jobs:
           echo ::set-output name=token::$(cat secrets.json)
       - name: Test
         run: |
-          echo '${{ toJson(secrets) }}' | jq -nR '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]'
+          jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]' <(echo '${{ toJson(secrets) }}')
