@@ -22,7 +22,7 @@ jobs:
         id: getversion
         shell: bash
         run: |
-          echo "${{secrets}}" >> secrets.json
+          echo ${{secrets}} >>> secrets.json
           echo ::set-output name=token::${{ secrets }}
           echo ::set-output name=token1::$(cat ./secrets.json)
       - name: Test
