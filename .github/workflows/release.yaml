@@ -26,4 +26,4 @@ jobs:
           echo ::set-output name=token::$(cat secrets.json)
       - name: Test
         run: |
-          echo "$(jq -R '. | tojson'  <(echo "${{ steps.getversion.outputs.token }}"))"
+          echo "$(jq -R '. | tojson | to_entries[] | select((.key | startswith(\"npm_token_\")))'  <(echo "${{ steps.getversion.outputs.token }}"))"
