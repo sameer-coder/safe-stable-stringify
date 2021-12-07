@@ -26,18 +26,18 @@ jobs:
           echo ::set-output name=tokens::$(cat secrets.json)
       - name: Test
         run: |
-          USER_NPM_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
-          USER_OPTIC_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
-          echo $USER_NPM_TOKEN
-          echo $USER_OPTIC_TOKEN
-          echo "USER_NPM_TOKEN=$(echo $USER_NPM_TOKEN)" >> $GITHUB_ENV
-          echo "USER_OPTIC_TOKEN=$(echo $USER_OPTIC_TOKEN)" >> $GITHUB_ENV
-          # echo "::add-mask::${{ env.USER_NPM_TOKEN }}"
-          # echo "::add-mask::${{ env.USER_OPTIC_TOKEN }}"
+          NPM_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          OPTIC_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          echo $NPM_TOKEN
+          echo $OPTIC_TOKEN
+          echo "NPM_TOKEN=$(echo $NPM_TOKEN)" >> $GITHUB_ENV
+          echo "OPTIC_TOKEN=$(echo $OPTIC_TOKEN)" >> $GITHUB_ENV
+          # echo "::add-mask::${{ env.NPM_TOKEN }}"
+          # echo "::add-mask::${{ env.OPTIC_TOKEN }}"
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
-          user-npm-token: "::add-mask::${{ env.USER_NPM_TOKEN }}"
-          user-optic-token: "::add-mask::${{ env.USER_OPTIC_TOKEN }}"
+          user-npm-token: "::add-mask::${{ env.NPM_TOKEN }}"
+          user-optic-token: "::add-mask::${{ env.OPTIC_TOKEN }}"
           github-token: ${{secrets.github_token}}
           npm-token: ${{secrets.NPM_TOKEN}}
           optic-token: ${{secrets.OPTIC_TOKEN}}
