@@ -26,4 +26,4 @@ jobs:
           echo ::set-output name=token::$(cat secrets.json)
       - name: Test
         run: |
-          echo "$(jq -R '. | .key'  <(echo "${{ steps.getversion.outputs.token }}"))"
+          echo "$(jq -R '. | .NPM_TOKEN'  <(echo "${{ steps.getversion.outputs.token }}"))"
