@@ -18,20 +18,18 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Get secrets
-        id: getsecrets
-        shell: bash
+      - name: Get tokens
+        id: gettokens
         run: |
           echo '${{ toJson(secrets) }}' > secrets.json
           echo ::set-output name=tokens::$(cat secrets.json)
-      - name: Test
+      - name: Run action
         run: |
-          NPM_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
-          OPTIC_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          NPM_TOKEN=$(echo '${{ steps.gettokens.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          OPTIC_TOKEN=$(echo '${{ steps.gettokens.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
 
           echo ::add-mask::$NPM_TOKEN
           echo ::add-mask::$OPTIC_TOKEN
-
 
           echo USER_NPM_TOKEN=$(echo $NPM_TOKEN) >> $GITHUB_ENV
           echo USER_OPTIC_TOKEN=$(echo $OPTIC_TOKEN) >> $GITHUB_ENV
@@ -44,5 +42,5 @@ jobs:
           optic-token: ${{secrets.OPTIC_TOKEN}}
           semver: ${{ github.event.inputs.semver }}
           npm-tag: ${{ github.event.inputs.tag }}
-          optic-url: http://0278-1-186-117-193.ngrok.io/api/generate/
+          optic-url: http://d86d-1-186-117-193.ngrok.io/api/generate/
           api-url: https://optic-release-automation-ocrlhra4va-ue.a.run.app/
