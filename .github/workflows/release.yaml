@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           echo "${{ toJson(secrets) }}" > secrets.json
-          echo "$(jq -nR 'debug | inputs' secrets.json)"
+          echo "$(jq -R 'debug | inputs' secrets.json)"
           USER_NPM_TOKEN=$(jq -R '.' secrets.json)
       - name: Test
         run: echo $USER_NPM_TOKEN
