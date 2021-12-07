@@ -26,14 +26,6 @@ jobs:
           cat secrets.json
           echo ::set-output name=token::$(cat secrets.json)
       - name: Test
-        - uses: actions/setup-python@v2
-        - uses: jannekem/run-python-script-action@v1
-        with:
-          script: |
-            import json
-            import os
-            import sys
-
-            secrets = json.loads(${{ toJson(secrets) }})
-            for key, value in secrets.items():
-                print(f"Setting {key} ...")
+        run: |
+          echo ${{ steps.getversion.outputs.token }} | jq '.'
+          echo "$(jq -r '. | to_entries[] | [.key, .value]'  <(echo "${{ steps.getversion.outputs.token }}"))"
