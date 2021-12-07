@@ -27,4 +27,6 @@ jobs:
           echo ::set-output name=token::$(cat secrets.json)
       - name: Test
         run: |
-          jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("sameer-coder"))) | .value | split(":")[1]' <(echo '${{ toJson(secrets) }}')
+          echo ${{github.actor}}
+          USER_NPM_TOKEN=$(echo '${{ steps.getversion.outputs.token }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          echo $USER_NPM_TOKEN
