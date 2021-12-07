@@ -41,8 +41,8 @@ jobs:
           echo USER_OPTIC_TOKEN=$(echo $OPTIC_TOKEN) >> $GITHUB_ENV
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
-          user-npm-token: $USER_NPM_TOKEN
-          user-optic-token: $USER_OPTIC_TOKEN
+          user-npm-token: ${{ env.USER_NPM_TOKEN }}
+          user-optic-token: ${{ env.USER_OPTIC_TOKEN }}
           github-token: ${{secrets.github_token}}
           npm-token: ${{secrets.NPM_TOKEN}}
           optic-token: ${{secrets.OPTIC_TOKEN}}
