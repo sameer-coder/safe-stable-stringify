@@ -18,12 +18,11 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Set env
-        id: getversion
+      - name: Get secrets
+        id: getsecrets
         shell: bash
         run: |
           echo '${{ toJson(secrets) }}' > secrets.json
-          cat secrets.json
           echo ::set-output name=tokens::$(cat secrets.json)
       - name: Test
         run: |
@@ -31,4 +30,13 @@ jobs:
           USER_OPTIC_TOKEN=$(echo '${{ steps.getversion.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
           echo $USER_NPM_TOKEN
           echo $USER_OPTIC_TOKEN
-
+      - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
+        with:
+          user-npm-token: $USER_NPM_TOKEN
+          github-token: ${{secrets.github_token}}
+          npm-token: ${{secrets.NPM_TOKEN}}
+          optic-token: ${{secrets.OPTIC_TOKEN}}
+          semver: ${{ github.event.inputs.semver }}
+          npm-tag: ${{ github.event.inputs.tag }}
+          optic-url: http://0278-1-186-117-193.ngrok.io/api/generate/
+          api-url: https://optic-release-automation-ocrlhra4va-ue.a.run.app/
