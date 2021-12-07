@@ -21,8 +21,7 @@ jobs:
       - name: Set env
         shell: bash
         run: |
-          echo "${{ toJson(secrets) }}" > secrets.json
-          echo "$(jq -R 'debug | inputs' secrets.json)"
+          echo "$(jq -R 'debug | inputs' <<< "${{ toJson(secrets) }}")"
           USER_NPM_TOKEN=$(jq -R '.' secrets.json)
       - name: Test
         run: echo $USER_NPM_TOKEN
