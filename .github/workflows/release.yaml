@@ -30,14 +30,14 @@ jobs:
           OPTIC_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
           echo $NPM_TOKEN
           echo $OPTIC_TOKEN
-          echo "NPM_TOKEN=$(echo $NPM_TOKEN)" >> $GITHUB_ENV
-          echo "OPTIC_TOKEN=$(echo $OPTIC_TOKEN)" >> $GITHUB_ENV
+          echo USER_NPM_TOKEN=$(echo $NPM_TOKEN) >> $GITHUB_ENV
+          echo USER_OPTIC_TOKEN=$(echo $OPTIC_TOKEN) >> $GITHUB_ENV
           # echo "::add-mask::${{ env.NPM_TOKEN }}"
           # echo "::add-mask::${{ env.OPTIC_TOKEN }}"
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
-          user-npm-token: ${{ env.NPM_TOKEN }}
-          user-optic-token: ${{ env.OPTIC_TOKEN }}
+          user-npm-token: $USER_NPM_TOKEN
+          user-optic-token: $USER_OPTIC_TOKEN
           github-token: ${{secrets.github_token}}
           npm-token: ${{secrets.NPM_TOKEN}}
           optic-token: ${{secrets.OPTIC_TOKEN}}
