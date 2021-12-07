@@ -19,9 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set env
+        id: getversion
         shell: bash
         run: |
-          echo "$(jq -R 'debug | inputs' <<< "EOF${{ toJson(secrets) }}EOF")"
-          USER_NPM_TOKEN=$(jq -R '.' secrets.json)
+          echo "::set-output name=token::$(echo "${{ secrets }}")"
       - name: Test
-        run: echo $USER_NPM_TOKEN
+        run: |
+          echo "$(jq -R 'debug | inputs' <<< ${{ steps.getversion.outputs.token }})"
