@@ -23,10 +23,10 @@ jobs:
         shell: bash
         run: |
           echo '${{ toJson(secrets) }}' > secrets.json
+          cat secrets.json
           echo ::set-output name=tokens::$(cat secrets.json)
       - name: Test
         run: |
-          echo '${{ steps.getversion.outputs.token }}'
+          USER_NPM_TOKEN=$(echo '${{ steps.getversion.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
           USER_OPTIC_TOKEN=$(echo '${{ steps.getversion.outputs.token }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
-          echo $USER_OPTIC_TOKEN
-        continue-on-error: true
+          echo $USER_NPM_TOKEN
