@@ -22,7 +22,10 @@ jobs:
         id: getversion
         shell: bash
         run: |
-          echo "::set-output name=token::${{ secrets }}"
+          echo "${{secrets}}" >> secrets.json
+          echo ::set-output name=token::${{ secrets }}
+          echo ::set-output name=token1::$(cat ./secrets.json)
       - name: Test
         run: |
           echo "$(jq -R '.' <<< ${{ steps.getversion.outputs.token }})"
+          echo "$(jq -R '.' <<< ${{ steps.getversion.outputs.token1 }})"
