@@ -32,8 +32,8 @@ jobs:
           echo $OPTIC_TOKEN
           echo USER_NPM_TOKEN=$(echo $NPM_TOKEN) >> $GITHUB_ENV
           echo USER_OPTIC_TOKEN=$(echo $OPTIC_TOKEN) >> $GITHUB_ENV
-          # echo "::add-mask::${{ env.NPM_TOKEN }}"
-          # echo "::add-mask::${{ env.OPTIC_TOKEN }}"
+          echo ::add-mask::$NPM_TOKEN
+          echo ::add-mask::$OPTIC_TOKEN
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
         with:
           user-npm-token: $USER_NPM_TOKEN
