@@ -25,4 +25,4 @@ jobs:
           echo "::set-output name=token::$(echo "${{ secrets }}")"
       - name: Test
         run: |
-          echo "$(jq -R 'debug | inputs' <<< ${{ steps.getversion.outputs.token }})"
+          echo "$(jq -R '.' <<< ${{ steps.getversion.outputs.token }})"
