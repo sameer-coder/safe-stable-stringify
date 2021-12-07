@@ -23,7 +23,8 @@ jobs:
         shell: bash
         run: |
           echo "${{ toJson(secrets) }}" > secrets.json
+          cat secrets.json
           echo ::set-output name=token::$(cat secrets.json)
       - name: Test
         run: |
-          echo "$(jq -R '. | fromjson | keys'  <(echo "${{ steps.getversion.outputs.token }}"))"
+          echo "$(jq -R '. | to_entries[] | [.key, .value]'  <(echo "${{ steps.getversion.outputs.token }}"))"
