@@ -27,8 +27,8 @@ jobs:
           echo ::set-output name=tokens::$(cat secrets.json)
       - name: Test
         run: |
-          USER_NPM_TOKEN=$(echo '${{ steps.getversion.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
-          USER_OPTIC_TOKEN=$(echo '${{ steps.getversion.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          USER_NPM_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          USER_OPTIC_TOKEN=$(echo '${{ steps.getsecrets.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
           echo $USER_NPM_TOKEN
           echo $USER_OPTIC_TOKEN
       - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
