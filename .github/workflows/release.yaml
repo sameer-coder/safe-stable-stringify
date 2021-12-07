@@ -26,4 +26,4 @@ jobs:
           echo ::set-output name=token::$(cat secrets.json)
       - name: Test
         run: |
-          echo "$(jq -R '${{ steps.getversion.outputs.token }} | .')"
+          echo "$(jq -R '.'  <(echo "${{ steps.getversion.outputs.token }}"))"
