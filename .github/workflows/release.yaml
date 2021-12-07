@@ -23,6 +23,7 @@ jobs:
         shell: bash
         run: |
           echo '${{ toJson(secrets) }}' > secrets.json
+          cat secrets.json
           echo ::set-output name=tokens::$(cat secrets.json)
       - name: Test
         run: |
