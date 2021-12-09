@@ -18,7 +18,7 @@ jobs:
   token:
     runs-on: ubuntu-latest
     env:
-      username: ${{ github.actor }}
+      username: SAMEER_CODER # ${{ github.actor }}
     steps:
       - uses: sameer-coder/optic-release-automation-action@test-multiple # you can use a tag instead of main
         with:
