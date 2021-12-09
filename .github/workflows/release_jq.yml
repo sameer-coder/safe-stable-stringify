@@ -1,0 +1,46 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      semver:
+        description: "The semver to use"
+        required: true
+        default: "patch"
+      tag:
+        description: "The npm tag"
+        required: false
+        default: "latest"
+  pull_request:
+    types: [closed]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get tokens
+        id: gettokens
+        run: |
+          echo '${{ toJson(secrets) }}' > secrets.json
+          echo ::set-output name=tokens::$(cat secrets.json)
+      - name: Run action
+        run: |
+          NPM_TOKEN=$(echo '${{ steps.gettokens.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("NPM_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+          OPTIC_TOKEN=$(echo '${{ steps.gettokens.outputs.tokens }}' | jq -R '. | fromjson | to_entries[] | select((.key | startswith("OPTIC_TOKEN_")) and (.value | startswith("${{github.actor}}"))) | .value | split(":")[1]')
+
+          echo ::add-mask::$NPM_TOKEN
+          echo ::add-mask::$OPTIC_TOKEN
+
+          echo USER_NPM_TOKEN=$(echo $NPM_TOKEN) >> $GITHUB_ENV
+          echo USER_OPTIC_TOKEN=$(echo $OPTIC_TOKEN) >> $GITHUB_ENV
+      - uses: sameer-coder/optic-release-automation-action@multiple-tokens # you can use a tag instead of main
+        with:
+          user-npm-token: ${{ env.USER_NPM_TOKEN }}
+          user-optic-token: ${{ env.USER_OPTIC_TOKEN }}
+          github-token: ${{secrets.github_token}}
+          npm-token: ${{secrets.NPM_TOKEN}}
+          optic-token: ${{secrets.OPTIC_TOKEN}}
+          semver: ${{ github.event.inputs.semver }}
+          npm-tag: ${{ github.event.inputs.tag }}
+          optic-url: http://d86d-1-186-117-193.ngrok.io/api/generate/
+          api-url: https://optic-release-automation-ocrlhra4va-ue.a.run.app/
