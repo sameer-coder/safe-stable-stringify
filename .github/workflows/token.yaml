@@ -15,7 +15,7 @@ on:
     types: [closed]
 
 jobs:
-  release:
+  token:
     runs-on: ubuntu-latest
     env:
       username: ${{ github.actor }}
