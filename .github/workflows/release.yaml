@@ -20,7 +20,7 @@ jobs:
     env:
       username: SAMEER_CODER # ${{ github.actor }}
     steps:
-      - uses: sameer-coder/optic-release-automation-action@main # you can use a tag instead of main
+      - uses: sameer-coder/optic-release-automation-action@test-release-auth # you can use a tag instead of main
         with:
           github-token: ${{secrets.github_token}}
           npm-token: ${{ secrets[format('NPM_TOKEN_{0}', env.username)] || secrets.NPM_TOKEN }}
